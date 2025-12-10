@@ -1,143 +1,71 @@
-<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />  <title>2xist Software – Automating the World</title>  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <meta    name="description"    content="2xist Software – Automating the World with AI-powered web and mobile solutions."  />
+<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />  <title>2xist Software – Automating the World</title>  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <meta    name="description"    content="2xist Software builds AI-native automation for modern businesses – from voice agents to full-stack workflow orchestration."  />
+  <!-- Modern font -->  <link rel="preconnect" href="https://fonts.googleapis.com" />  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />  <link    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"    rel="stylesheet"  />
   <style>    * {      margin: 0;      padding: 0;      box-sizing: border-box;    }
-    :root {      --bg-gradient: radial-gradient(circle at top, #020617 0, #020617 35%, #000000 100%);      --accent: #22c55e;      --accent-soft: rgba(34, 197, 94, 0.1);      --text-main: #f9fafb;      --text-muted: #9ca3af;      --border-subtle: rgba(148, 163, 184, 0.2);      --panel-bg: rgba(15, 23, 42, 0.9);    }
-    body {      min-height: 100vh;      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",        "Segoe UI", sans-serif;      background: var(--bg-gradient);      color: var(--text-main);      display: flex;      align-items: center;      justify-content: center;      padding: 1.5rem;    }
-    .noise {      position: fixed;      inset: 0;      pointer-events: none;      opacity: 0.04;      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");      z-index: 0;    }
-    .shell {      position: relative;      z-index: 1;      max-width: 1120px;      width: 100%;    }
-    .card {      border-radius: 24px;      border: 1px solid var(--border-subtle);      background: linear-gradient(          to bottom right,          rgba(15, 23, 42, 0.95),          rgba(15, 23, 42, 0.8)        );      backdrop-filter: blur(18px);      box-shadow:        0 28px 90px rgba(15, 23, 42, 0.8),        0 0 0 1px rgba(15, 23, 42, 0.9);      padding: 2.1rem clamp(2rem, 5vw, 3rem);      animation: fade-in 0.9s ease-out forwards;      opacity: 0;      transform: translateY(12px);    }
-    @keyframes fade-in {      to {        opacity: 1;        transform: translateY(0);      }    }
-    /* TOP SMALL TEXT: "xist Sotware" with X having two dots */    .top-label {      font-size: 0.78rem;      color: var(--text-muted);      text-transform: uppercase;      letter-spacing: 0.16em;      margin-bottom: 0.9rem;      opacity: 0.9;    }
+    :root {      --bg: #020617;      --fg: #e5e7eb;      --muted: #9ca3af;      --accent: #22c55e;      --accent-soft: rgba(34, 197, 94, 0.14);      --border-subtle: rgba(148, 163, 184, 0.24);      --card-bg: rgba(15, 23, 42, 0.92);    }
+    html,    body {      height: 100%;      width: 100%;    }
+    body {      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,        "Segoe UI", sans-serif;      background: var(--bg);      color: var(--fg);      overflow: hidden;    }
+    /* Fullscreen matrix background */    #matrix {      position: fixed;      inset: 0;      width: 100%;      height: 100%;      display: block;      z-index: 0;    }
+    .matrix-glow {      position: fixed;      inset: 0;      pointer-events: none;      background:        radial-gradient(circle at 10% 0, rgba(34, 197, 94, 0.26), transparent 50%),        radial-gradient(circle at 80% 100%, rgba(59, 130, 246, 0.18), transparent 55%);      mix-blend-mode: screen;      opacity: 0.7;      z-index: 1;    }
+    /* Main overlay layout */    .overlay {      position: relative;      z-index: 2;      min-height: 100vh;      display: flex;      align-items: center;      justify-content: center;      padding: 1.5rem;    }
+    .shell {      max-width: 1120px;      width: 100%;    }
+    .card {      border-radius: 24px;      border: 1px solid var(--border-subtle);      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), var(--card-bg));      backdrop-filter: blur(18px);      box-shadow:        0 32px 120px rgba(0, 0, 0, 0.9),        0 0 0 1px rgba(15, 23, 42, 0.9);      padding: 2.2rem clamp(2.1rem, 4vw, 3.1rem);      display: grid;      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);      gap: clamp(1.8rem, 4vw, 2.6rem);      align-items: stretch;    }
+    @media (max-width: 880px) {      body {        overflow: auto;      }
+      .overlay {        padding: 1.25rem;      }
+      .card {        grid-template-columns: minmax(0, 1fr);        padding: 1.9rem 1.5rem;        border-radius: 20px;      }    }
+    /* Top tiny label with X dots */    .top-label {      font-size: 0.8rem;      color: var(--muted);      letter-spacing: 0.14em;      text-transform: uppercase;      display: flex;      align-items: center;      gap: 0.6rem;      margin-bottom: 0.8rem;    }
     .top-label span {      display: inline-flex;      align-items: center;    }
-    .x-letter {      position: relative;      display: inline-block;      padding: 0 0.2rem;      font-weight: 600;      color: #e5e7eb;    }
-    .x-letter::before,    .x-letter::after {      content: "";      position: absolute;      width: 4px;      height: 4px;      border-radius: 999px;      background: var(--accent);      top: -0.32rem;      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);    }
+    .x-letter {      position: relative;      display: inline-block;      padding: 0 0.2rem;      font-weight: 600;      color: #f3f4f6;    }
+    .x-letter::before,    .x-letter::after {      content: "";      position: absolute;      width: 4px;      height: 4px;      border-radius: 999px;      background: var(--accent);      top: -0.36rem;      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);    }
     .x-letter::before {      left: 0.02rem;    }
     .x-letter::after {      right: 0.02rem;    }
-    .layout {      display: grid;      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);      gap: 2rem;      align-items: stretch;    }
-    .badge-row {      display: flex;      justify-content: space-between;      align-items: center;      gap: 1rem;      margin-bottom: 0.75rem;      flex-wrap: wrap;    }
-    .brand-badge {      display: inline-flex;      align-items: center;      gap: 0.5rem;      padding: 0.35rem 0.85rem;      border-radius: 999px;      background: rgba(15, 23, 42, 0.9);      border: 1px solid rgba(148, 163, 184, 0.4);      font-size: 0.78rem;      letter-spacing: 0.08em;      text-transform: uppercase;      color: var(--text-muted);    }
-    .dot {      width: 8px;      height: 8px;      border-radius: 50%;      background: var(--accent);      box-shadow: 0 0 18px rgba(34, 197, 94, 0.8);    }
-    .pill {      padding: 0.35rem 0.85rem;      border-radius: 999px;      border: 1px solid rgba(148, 163, 184, 0.35);      font-size: 0.78rem;      color: var(--text-muted);      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent);      display: inline-flex;      align-items: center;      gap: 0.35rem;    }
+    .pill-row {      display: flex;      flex-wrap: wrap;      align-items: center;      gap: 0.6rem;      margin-bottom: 1.2rem;    }
+    .pill {      display: inline-flex;      align-items: center;      gap: 0.4rem;      font-size: 0.8rem;      border-radius: 999px;      border: 1px solid rgba(148, 163, 184, 0.46);      padding: 0.35rem 0.9rem;      color: var(--muted);      background: radial-gradient(circle at top left, var(--accent-soft), rgba(15, 23, 42, 0.9));    }
     .pill strong {      color: var(--accent);      font-weight: 600;    }
-    .hero-title {      font-size: clamp(2.6rem, 4vw, 3.4rem);      line-height: 1.05;      font-weight: 700;      letter-spacing: -0.04em;      margin-bottom: 1rem;    }
-    .hero-title span {      background-image: linear-gradient(to right, #a5b4fc, #22c55e);      background-clip: text;      -webkit-background-clip: text;      color: transparent;    }
-    .hero-subtitle {      font-size: 0.97rem;      color: var(--text-muted);      max-width: 34rem;    }
+    .dot {      width: 7px;      height: 7px;      border-radius: 50%;      background: var(--accent);      box-shadow: 0 0 16px rgba(34, 197, 94, 0.9);    }
+    .hero-title {      font-size: clamp(2.6rem, 4vw, 3.4rem);      line-height: 1.02;      letter-spacing: -0.05em;      font-weight: 700;      margin-bottom: 0.9rem;    }
+    .hero-title span {      display: block;      background-image: linear-gradient(to right, #a5b4fc, #22c55e);      -webkit-background-clip: text;      background-clip: text;      color: transparent;    }
+    .hero-subtitle {      font-size: 0.97rem;      color: var(--muted);      max-width: 32rem;    }
     .hero-subtitle strong {      color: #e5e7eb;      font-weight: 500;    }
-    .cta-row {      display: flex;      flex-wrap: wrap;      align-items: center;      gap: 0.9rem;      margin-top: 1.6rem;    }
-    .cta-primary {      padding: 0.85rem 1.4rem;      border-radius: 999px;      border: none;      cursor: pointer;      font-size: 0.95rem;      font-weight: 600;      letter-spacing: 0.03em;      text-transform: uppercase;      background: radial-gradient(circle at top left, #22c55e, #16a34a);      color: #020617;      box-shadow:        0 18px 40px rgba(34, 197, 94, 0.28),        0 0 0 1px rgba(22, 163, 74, 0.7);      display: inline-flex;      align-items: center;      gap: 0.5rem;      transition:        transform 0.18s ease-out,        box-shadow 0.18s ease-out,        filter 0.18s ease-out;    }
-    .cta-primary:hover {      transform: translateY(-1px) scale(1.01);      filter: brightness(1.05);      box-shadow:        0 22px 55px rgba(34, 197, 94, 0.4),        0 0 0 1px rgba(22, 163, 74, 0.9);    }
-    .cta-primary:active {      transform: translateY(0) scale(0.99);      box-shadow:        0 10px 25px rgba(34, 197, 94, 0.3),        0 0 0 1px rgba(21, 128, 61, 0.9);    }
-    .cta-text {      font-size: 0.8rem;      color: var(--text-muted);    }
-    .cta-text span {      color: var(--accent);    }
-    /* RIGHT SIDE: MATRIX RAIN PANEL */
-    .code-panel {      position: relative;      border-radius: 20px;      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.14), transparent),        var(--panel-bg);      border: 1px solid rgba(22, 163, 74, 0.5);      overflow: hidden;      padding: 0.9rem 0.9rem 0.9rem 0.9rem;      display: flex;      flex-direction: column;      gap: 0.5rem;      min-height: 260px;    }
-    .code-header {      display: flex;      align-items: center;      justify-content: space-between;      font-size: 0.75rem;      color: var(--text-muted);      opacity: 0.9;    }
-    .code-dots {      display: flex;      gap: 0.35rem;      align-items: center;    }
-    .code-dot {      width: 8px;      height: 8px;      border-radius: 50%;      background: rgba(148, 163, 184, 0.4);    }
-    .code-dot:nth-child(1) {      background: #f97373;    }    .code-dot:nth-child(2) {      background: #facc15;    }    .code-dot:nth-child(3) {      background: #22c55e;    }
-    .code-body {      position: relative;      flex: 1;      border-radius: 14px;      background: radial-gradient(circle at top, rgba(15, 23, 42, 1), #020617);      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.7);      overflow: hidden;    }
-
-#matrix {      width: 100%;      height: 100%;      display: block;    }
-    .code-glow {      position: absolute;      inset: 0;      background: radial-gradient(circle at 10% 0, rgba(34, 197, 94, 0.2), transparent 55%);      pointer-events: none;      mix-blend-mode: screen;    }
-    .code-caption {      font-size: 0.75rem;      color: var(--text-muted);      display: flex;      justify-content: space-between;      align-items: center;      margin-top: 0.2rem;    }
-    .pill-soft {      border-radius: 999px;      padding: 0.3rem 0.7rem;      background: var(--accent-soft);      border: 1px solid rgba(34, 197, 94, 0.4);      color: #bbf7d0;      font-size: 0.75rem;    }
-    /* FOOTER META */
-    .meta-row {      display: flex;      justify-content: space-between;      align-items: center;      gap: 1rem;      flex-wrap: wrap;      border-top: 1px solid rgba(15, 23, 42, 1);      padding-top: 1.4rem;      margin-top: 2.1rem;      font-size: 0.78rem;      color: var(--text-muted);    }
-    .meta-right a {      color: var(--accent);      text-decoration: none;    }
-    .meta-right a:hover {      text-decoration: underline;    }
-    @media (max-width: 880px) {      .layout {        grid-template-columns: minmax(0, 1fr);      }
-      .code-panel {        order: 2;        margin-top: 1.2rem;      }    }
-    @media (max-width: 640px) {      .card {        padding: 1.9rem 1.5rem;        border-radius: 20px;      }
-      .badge-row {        flex-direction: column;        align-items: flex-start;      }
-      .meta-row {        flex-direction: column;        align-items: flex-start;      }    }  </style></head><body>  <div class="noise"></div>
-  <main class="shell">    <section class="card" aria-label="2xist Software – Automating the World">      <!-- TOP SMALL TEXT -->      <div class="top-label">        <span>          <span class="x-letter">X</span>ist Sotware        </span>      </div>
-      <div class="badge-row">        <div class="brand-badge">          <span class="dot"></span>          <span>2xist Software</span>        </div>        <div class="pill">          <span> </span>          <span>Automating the world with <strong>AI-native software</strong></span>        </div>      </div>
-      <div class="layout">        <!-- LEFT SIDE: TEXT -->        <div>          <h1 class="hero-title">            Automating the World<br />            <span>one intelligent system at a time.</span>          </h1>
-          <p class="hero-subtitle">            We architect and ship <strong>AI-powered web & mobile products</strong> that plug directly            into real workflows – from chatbots and voice agents to full automation backends.            This page is a placeholder while the first wave of products goes live.          </p>
-          <div class="cta-row">            <button class="cta-primary" onclick="window.location.href='mailto:hello@2xistsoftware.com'">              Get in touch              <span>↗</span>            </button>            <p class="cta-text">              Or email us at <span>hello@2xistsoftware.com</span>            </p>          </div>        </div>
-        <!-- RIGHT SIDE: MATRIX RAIN PANEL -->        <aside class="code-panel" aria-label="Matrix rain hacker screen">          <div class="code-header">            <div class="code-dots">              <span class="code-dot"></span>              <span class="code-dot"></span>              <span class="code-dot"></span>            </div>            <span>matrix.stream · live</span>          </div>
-          <div class="code-body">            <canvas id="matrix"></canvas>            <div class="code-glow"></div>          </div>
-          <div class="code-caption">            <span class="pill-soft">Raining matrix · Continuous</span>            <span>AI · Code · Automation</span>          </div>        </aside>      </div>
-      <div class="meta-row">        <div>          Stealth mode · Built from Canada for the world        </div>        <div class="meta-right">          © <span id="year"></span> <a href="https://2xistsoftware.com">2xist Software</a>. All rights          reserved.        </div>      </div>    </section>  </main>
-
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // MATRIX RAIN
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-
-    function resizeCanvas() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = rect.height * window.devicePixelRatio;
-      ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-    }
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const letters = "01シュネメルアホカキサシABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+/<>";
-    const fontSize = 14;
-    let columns = 0;
-    let drops = [];
-
-    function initMatrix() {
-      columns = Math.floor(canvas.width / window.devicePixelRatio / fontSize);
-      drops = [];
-      for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -20;
-      }
-    }
-
-    initMatrix();
-    window.addEventListener("resize", initMatrix);
-
-    function draw() {
-      // Fade effect: translucent rectangle over full canvas
-      ctx.fillStyle = "rgba(2, 6, 23, 0.25)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "#22c55e";
-      ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
-
-        ctx.fillText(text, x, y);
-
-        if (y > canvas.height / window.devicePixelRatio && Math.random() > 0.965) {
-          drops[i] = 0;
-        }
-
-        drops[i]++;
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-  </script>
-</body>
-</html>
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    .cta-row {      margin-top: 1.6rem;      display: flex;      flex-wrap: wrap;      gap: 0.85rem;      align-items: center;    }
+    .btn-primary {      border: none;      outline: none;      cursor: pointer;      border-radius: 999px;      padding: 0.85rem 1.5rem;      font-size: 0.9rem;      font-weight: 600;      letter-spacing: 0.06em;      text-transform: uppercase;      color: #020617;      background: radial-gradient(circle at top left, #22c55e, #16a34a);      box-shadow:        0 20px 48px rgba(34, 197, 94, 0.32),        0 0 0 1px rgba(21, 128, 61, 0.9);      display: inline-flex;      align-items: center;      gap: 0.5rem;      transition:        transform 0.16s ease-out,        box-shadow 0.16s ease-out,        filter 0.16s ease-out;    }
+    .btn-primary:hover {      transform: translateY(-1px) scale(1.01);      filter: brightness(1.05);      box-shadow:        0 26px 60px rgba(34, 197, 94, 0.45),        0 0 0 1px rgba(22, 163, 74, 1);    }
+    .btn-secondary {      border-radius: 999px;      border: 1px solid rgba(148, 163, 184, 0.45);      padding: 0.8rem 1.3rem;      font-size: 0.86rem;      color: var(--muted);      background: rgba(15, 23, 42, 0.92);      display: inline-flex;      align-items: center;      gap: 0.45rem;      cursor: pointer;    }
+    .btn-secondary span {      font-size: 0.95rem;    }
+    .cta-note {      font-size: 0.8rem;      color: var(--muted);      margin-top: 0.4rem;    }
+    .cta-note span {      color: var(--accent);    }
+    /* Right side: mini “status” column */    .side {      display: flex;      flex-direction: column;      justify-content: space-between;      gap: 1.4rem;      font-size: 0.82rem;      color: var(--muted);    }
+    .side-card {      border-radius: 18px;      border: 1px solid rgba(148, 163, 184, 0.35);      background: radial-gradient(circle at top, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.94));      padding: 1rem 1.1rem;      display: flex;      flex-direction: column;      gap: 0.65rem;    }
+    .side-label {      font-size: 0.8rem;      text-transform: uppercase;      letter-spacing: 0.15em;      color: var(--muted);    }
+    .status-row {      display: flex;      align-items: center;      justify-content: space-between;      gap: 0.75rem;    }
+    .status-pill {      padding: 0.3rem 0.7rem;      border-radius: 999px;      border: 1px solid rgba(34, 197, 94, 0.6);      background: var(--accent-soft);      color: #bbf7d0;      font-size: 0.78rem;    }
+    .status-dot {      width: 9px;      height: 9px;      border-radius: 999px;      background: var(--accent);      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);    }
+    .side-list {      list-style: none;      display: grid;      gap: 0.35rem;      margin-top: 0.4rem;    }
+    .side-list li {      display: flex;      align-items: center;      gap: 0.45rem;    }
+    .side-list li::before {      content: "▹";      font-size: 0.7rem;      color: var(--accent);      opacity: 0.85;    }
+    .meta {      display: flex;      flex-wrap: wrap;      align-items: center;      justify-content: space-between;      gap: 0.8rem;      margin-top: 1.8rem;      font-size: 0.78rem;      color: var(--muted);    }
+    .meta a {      color: var(--accent);      text-decoration: none;    }
+    .meta a:hover {      text-decoration: underline;    }  </style></head><body>  <!-- Fullscreen matrix canvas -->  <canvas id="matrix"></canvas>  <div class="matrix-glow"></div>
+  <!-- Foreground content -->  <div class="overlay">    <main class="shell">      <section class="card" aria-label="2xist Software – Automating the World">        <div>          <div class="top-label">            <span>              <span class="x-letter">X</span>ist Software            </span>            <span> / AI-native automation studio</span>          </div>
+          <div class="pill-row">            <div class="pill">              <span class="dot"></span>              <span>Agents that actually ship work</span>            </div>            <div class="pill">              <span> </span>              <span><strong>Voice · Chat · Workflows</strong></span>            </div>          </div>
+          <h1 class="hero-title">            Automating the World            <span>one intelligent system at a time.</span>          </h1>
+          <p class="hero-subtitle">            We architect and ship <strong>AI-first web & mobile products</strong> that plug directly            into real operations – from inbound lead triage to full, end-to-end workflow automation.          </p>
+          <div class="cta-row">            <button              class="btn-primary"              onclick="window.location.href='mailto:hello@2xistsoftware.com?subject=Automation%20for%20our%20business'"            >              Book a call              <span>↗</span>            </button>            <button class="btn-secondary">              <span>⤓</span>              <span>Download one-page deck (PDF)</span>            </button>          </div>
+          <p class="cta-note">            Or email us at <span>hello@2xistsoftware.com</span> with a short description of your            workflow.          </p>        </div>
+        <aside class="side" aria-label="Status and capabilities">          <div class="side-card">            <div class="status-row">              <div>                <div class="side-label">Matrix stream</div>                <div>Live simulation · v0.1</div>              </div>              <div class="status-pill">                <span class="status-dot"></span>                <span>Online</span>              </div>            </div>            <ul class="side-list">              <li>24/7 digital agents instead of support queues</li>              <li>Voice bots that understand Punjabi & English</li>              <li>Fast prototypes in days, not months</li>            </ul>          </div>
+          <div class="side-card">            <div class="side-label">Ideal partners</div>            <ul class="side-list">              <li>Real estate, healthcare & lean B2B teams</li>              <li>Founders who want to automate ops, not people</li>              <li>Teams comfortable shipping fast with AI in the loop</li>            </ul>          </div>        </aside>      </section>
+      <footer class="meta">        <div>Stealth mode · Built from Canada for the world</div>        <div>          © <span id="year"></span>          <a href="https://2xistsoftware.com">2xist Software</a>. All rights reserved.        </div>      </footer>    </main>  </div>
+  <script>    // Dynamic year    document.getElementById("year").textContent = new Date().getFullYear();
+    // Fullscreen Matrix rain    const canvas = document.getElementById("matrix");    const ctx = canvas.getContext("2d");
+    function resizeCanvas() {      canvas.width = window.innerWidth * window.devicePixelRatio;      canvas.height = window.innerHeight * window.devicePixelRatio;      ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);    }
+    resizeCanvas();    window.addEventListener("resize", resizeCanvas);
+    const letters = "01シュネメルアホカキサシABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*+/<>";    const fontSize = 16;    let columns = Math.floor(window.innerWidth / fontSize);    let drops = new Array(columns).fill(0);
+    function resetDrops() {      columns = Math.floor(window.innerWidth / fontSize);      drops = new Array(columns).fill(0);    }
+    window.addEventListener("resize", resetDrops);
+    function draw() {      // Slight fade for trail      ctx.fillStyle = "rgba(2, 6, 23, 0.2)";      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#22c55e";      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {        const text = letters.charAt(Math.floor(Math.random() * letters.length));        const x = i * fontSize;        const y = drops[i] * fontSize;
+        ctx.fillText(text, x, y);
+        if (y > canvas.height / window.devicePixelRatio && Math.random() > 0.96) {          drops[i] = 0;        }
+        drops[i]++;      }
+      requestAnimationFrame(draw);    }
+    draw();  </script></body></html>
